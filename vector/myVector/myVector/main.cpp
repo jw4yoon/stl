@@ -13,7 +13,9 @@
 int main(int argc, const char * argv[]) {
     // insert code here...
     std::cout << "Hello, World!\n";
-    myVector<int> myVec;
+    MyVector<int> myVec;
+    myVec.push_back(1);
+    std::cout << "This is my output: " << myVec[0] << std::endl;
     //std::vector<int> hello{1,2,3};
     //hello.push_back("123");
     return 0;

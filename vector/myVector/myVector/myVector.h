@@ -51,8 +51,11 @@ public:
 //        }
         delete[] array;
     }
-    MyVector() {} // basic constructor
+    MyVector() { // basic constructor
+        std::cout << "Basic constructor called" << std::endl;
+    }
     MyVector(std::initializer_list<T> il) { // constructor with initializer_list
+        std::cout << "Constructor with initializer_list called" << std::endl;
         size_t listSize = il.size();
         reSize(array, size, (int)listSize); // why does reSize(array, size, size*2) work?
         for (size_t i = 0; i < listSize; ++i) {
@@ -61,20 +64,43 @@ public:
         index = (int)listSize - 1;
     }
     MyVector(const MyVector& vec) { // copy constructor
-        std::cout << vec.size << " " << vec.index << std::endl;
-        this->size = vec.size;
-        this->index = vec.index;
+        std::cout << "Copy constructor called" << std::endl;
+        size = vec.size;
+        index = vec.index;
         reSize(array, this->size, this->size);
         for (int i = 0; i < this->size; ++i) {
             array[i] = vec.array[i];
         }
     }
     MyVector& operator=(const MyVector& other) { // copy assignment operator
+        std::cout << "Copy assignment operator called" << std::endl;
         if (this != &other) { // avoid self-assignment
             reSize(array, size, other.size);
             for (int i = 0; i < other.size; ++i) {
                 array[i] = other.array[i];
             }
+        }
+        return *this;
+    }
+    MyVector(MyVector&& other) { // move constructor
+        std::cout << "Move constructor called" << std::endl;
+        array = other.array;
+        size = other.size;
+        index = other.index;
+        other.array = nullptr;
+        other.size = 0;
+        other.index = 0;
+    }
+    MyVector& operator=(MyVector&& other) { // move assignment operator
+        std::cout << "Move assignment operator called" << std::endl;
+        if (this != &other) { // avoid self-assignment
+            delete[] array;
+            array = other.array;
+            size = other.size;
+            index = other.index;
+            other.array = nullptr;
+            other.size = 0;
+            other.index = 0;
         }
         return *this;
     }
@@ -84,6 +110,9 @@ public:
         }
         array[index] = elem;
         ++index;
+    }
+    bool empty() {
+        return index == 0;
     }
     T operator[] (const int& ind) {
         return array[ind];

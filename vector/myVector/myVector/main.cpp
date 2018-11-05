@@ -11,20 +11,30 @@
 #include <vector>
 
 int main(int argc, const char * argv[]) {
-    // insert code here...
-    std::cout << "Hello, World!\n";
     MyVector<int> basicVec;
     basicVec.push_back(1);
-    std::cout << "This is my output: " << basicVec[0] << std::endl;
+    //std::cout << "This is my output: " << basicVec[0] << std::endl;
     MyVector<int> initWithIL{10, 20, 30, 40, 50};
-    std::cout << initWithIL[0] << " " << initWithIL[1] << std::endl;
+    //std::cout << initWithIL[0] << " " << initWithIL[1] << std::endl;
     MyVector<int> vecCopy = initWithIL;
-    std::cout << vecCopy[0] << " " << vecCopy[1] << std::endl;
+    //std::cout << vecCopy[0] << " " << vecCopy[1] << std::endl;
     
     MyVector<int> copyAssign;
     copyAssign = vecCopy;
-    std::cout << copyAssign[0] << " " << copyAssign[1] << std::endl;
+    //std::cout << copyAssign[0] << " " << copyAssign[1] << std::endl;
     ;
+    MyVector<int> moveConst(std::move(basicVec));
+    //std::cout << moveConst[0] << std::endl;
+    /*
+    if (basicVec.empty() == true) {
+        std::cout << "Is basicVec empty? " << basicVec.empty() << std::endl;
+    }
+     */
+    MyVector<int> moveAssign;
+    moveAssign = std::move(moveConst);
+    //std::cout << "moveAssign[0] == " << moveAssign[0] << std::endl;
+
+
     /*
     MyVector<int*> pointerVec;
     int myNum = 0;

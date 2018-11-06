@@ -11,10 +11,11 @@
 
 #include <initializer_list>
 #include <algorithm>
+#include <iterator>
 
-template<typename type>
-void reSize(type*& arr, int& size, int newSize) {
-    type* newArray = new type[newSize];
+template<typename T>
+void reSize(T*& arr, int& size, int newSize) {
+    T* newArray = new T[newSize];
     if (arr != nullptr) {
         for (int i = 0; i < size; ++i) {
             newArray[i] = arr[i];
@@ -23,27 +24,13 @@ void reSize(type*& arr, int& size, int newSize) {
     }
     arr = newArray;
     size = newSize;
-    
-//    if (size == 0) {
-//        arr = new type[newSize];
-//    } else {
-//        type* newArray = new type[newSize];
-//        if (arr != nullptr) {
-//            for (int i = 0; i < size; ++i) {
-//                newArray[i] = arr[i];
-//            }
-//            delete[] arr;
-//        }
-//        arr = newArray;
-//    }
-//    size = newSize;
 }
 
 template <class T>
 class MyVector {
     T *array = nullptr;
     int size = 0;
-    int index = 0;
+    int index = -1;
 public:
     ~MyVector() {
 //        for (int i = 0; i < size; ++i) {
@@ -89,7 +76,7 @@ public:
         index = other.index;
         other.array = nullptr;
         other.size = 0;
-        other.index = 0;
+        other.index = -1;
     }
     MyVector& operator=(MyVector&& other) { // move assignment operator
         std::cout << "Move assignment operator called" << std::endl;
@@ -100,23 +87,35 @@ public:
             index = other.index;
             other.array = nullptr;
             other.size = 0;
-            other.index = 0;
+            other.index = -1;
         }
         return *this;
     }
     void push_back(const T& elem) {
+        ++index;
         if (size == index) {
             reSize(array, size, std::max(1, size*2)); // if size == 0, newSize needs to be 1
         }
         array[index] = elem;
-        ++index;
     }
     bool empty() {
-        return index == 0;
+        return index == -1;
     }
-    T operator[] (const int& ind) {
+    T& operator[] (const int& ind) {
         return array[ind];
     }
+    T& at(int ind) {
+        std::cout << "current index is == " << index << std::endl;
+        if (ind > index || ind < 0) {
+            throw std::out_of_range("out of range");
+        } else {
+            return array[ind];
+        }
+    }
+    T& back() {
+        return array[index];
+    }
+    
 };
 
 

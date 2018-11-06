@@ -25,16 +25,19 @@ int main(int argc, const char * argv[]) {
     ;
     MyVector<int> moveConst(std::move(basicVec));
     //std::cout << moveConst[0] << std::endl;
-    /*
+    
     if (basicVec.empty() == true) {
-        std::cout << "Is basicVec empty? " << basicVec.empty() << std::endl;
+        std::cout << "basicVec moved" << std::endl;
     }
-     */
+    
     MyVector<int> moveAssign;
     moveAssign = std::move(moveConst);
     //std::cout << "moveAssign[0] == " << moveAssign[0] << std::endl;
 
-
+    std::cout << moveAssign.at(0) << std::endl;
+    //std::cout << moveAssign.at(1) << std::endl; //throws SIGABRT
+    
+    std::cout << initWithIL.back() << std::endl;
     /*
     MyVector<int*> pointerVec;
     int myNum = 0;

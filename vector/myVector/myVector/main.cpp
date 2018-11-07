@@ -50,6 +50,10 @@ int main(int argc, const char * argv[]) {
         std::cout << *it << std::endl;
     }
     
+    MyVector<int> one{1};
+    std::cout << "here " << one[0] << std::endl;
+    one.pop_back();
+
     /*
     MyVector<int*> pointerVec;
     int myNum = 0;

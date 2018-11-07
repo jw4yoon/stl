@@ -36,7 +36,10 @@ public:
 //        for (int i = 0; i < size; ++i) {
 //            delete array[i];
 //        }
-        delete[] array;
+        if (array != nullptr) {
+            delete[] array;
+            array = nullptr;
+        }
     }
     MyVector() { // basic constructor
         std::cout << "Basic constructor called" << std::endl;
@@ -160,6 +163,7 @@ public:
     }
     void clear() {
         delete[] array;
+        array = nullptr;
         size = 0;
         index = -1;
     }
@@ -167,7 +171,12 @@ public:
         return array;
     }
     void pop_back() {
-        if (index > -1) {
+        if (index == 0) {
+            delete[] array;
+            array = nullptr;
+            index = -1;
+            size = 0;
+        } else if (index > -1) {
             //delete array[index];
             --index;
             --size;

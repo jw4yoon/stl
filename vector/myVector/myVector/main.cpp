@@ -13,18 +13,15 @@
 int main(int argc, const char * argv[]) {
     MyVector<int> basicVec;
     basicVec.push_back(1);
-    //std::cout << "This is my output: " << basicVec[0] << std::endl;
+
     MyVector<int> initWithIL{10, 20, 30, 40, 50};
-    //std::cout << initWithIL[0] << " " << initWithIL[1] << std::endl;
+
     MyVector<int> vecCopy = initWithIL;
-    //std::cout << vecCopy[0] << " " << vecCopy[1] << std::endl;
     
     MyVector<int> copyAssign;
     copyAssign = vecCopy;
-    //std::cout << copyAssign[0] << " " << copyAssign[1] << std::endl;
-    ;
+
     MyVector<int> moveConst(std::move(basicVec));
-    //std::cout << moveConst[0] << std::endl;
     
     if (basicVec.empty() == true) {
         std::cout << "basicVec moved" << std::endl;
@@ -32,12 +29,27 @@ int main(int argc, const char * argv[]) {
     
     MyVector<int> moveAssign;
     moveAssign = std::move(moveConst);
-    //std::cout << "moveAssign[0] == " << moveAssign[0] << std::endl;
 
     std::cout << moveAssign.at(0) << std::endl;
     //std::cout << moveAssign.at(1) << std::endl; //throws SIGABRT
     
-    std::cout << initWithIL.back() << std::endl;
+    if (initWithIL.back() == initWithIL[4] && initWithIL.back() == 50) {
+        std::cout << "MyVector::back() works" << std::endl;
+    }
+    
+    std::cout << (int)initWithIL.capacity() << std::endl;
+    initWithIL.push_back(60);
+    initWithIL[5] = 6;
+
+    auto ptr = initWithIL.data();
+    ++ptr;
+    initWithIL.pop_back();
+    
+    std::cout << "loop start" << std::endl;
+    for (MyVector<int>::Iterator it = initWithIL.begin()+4; it != initWithIL.end(); ++it) {
+        std::cout << *it << std::endl;
+    }
+    
     /*
     MyVector<int*> pointerVec;
     int myNum = 0;

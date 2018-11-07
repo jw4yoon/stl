@@ -91,6 +91,44 @@ public:
         }
         return *this;
     }
+    class Iterator {
+        T* t;
+        int i;
+    public:
+        explicit Iterator(T* t, int i): t{t}, i{i} {}
+        T& operator*() const {
+            return *t;
+        }
+        Iterator& operator++() {
+            ++t;
+            return *this;
+        }
+        Iterator& operator++(int) {
+            return ++(*this); // or ++this?
+        }
+        bool operator==(const Iterator& other) {
+            return t == other.t;
+        }
+        bool operator!=(const Iterator& other) {
+            return !(*this==other);
+        }
+        Iterator operator+(int num) {
+            if (num < i && num > -1) {
+                return Iterator{t+num, num};
+            } else {
+                return Iterator{&(t[i]), i}; // same as Iterator end(). out_of_range
+            }
+            
+        }
+    };
+    Iterator begin() {
+        return Iterator{array, index+1};
+    }
+    Iterator end() {
+        return Iterator{&(array[index+1]), index+1};
+    }
+    
+    
     void push_back(const T& elem) {
         ++index;
         if (size == index) {
@@ -105,17 +143,36 @@ public:
         return array[ind];
     }
     T& at(int ind) {
-        std::cout << "current index is == " << index << std::endl;
         if (ind > index || ind < 0) {
             throw std::out_of_range("out of range");
         } else {
             return array[ind];
         }
     }
+    T& front() {
+        return array[0];
+    }
     T& back() {
         return array[index];
     }
-    
+    size_t capacity() {
+        return (size_t)size;
+    }
+    void clear() {
+        delete[] array;
+        size = 0;
+        index = -1;
+    }
+    T* data() { // returns pointer to the first element
+        return array;
+    }
+    void pop_back() {
+        if (index > -1) {
+            //delete array[index];
+            --index;
+            --size;
+        }
+    }
 };
 
 

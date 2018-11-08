@@ -96,9 +96,10 @@ public:
     }
     class Iterator {
         T* t;
-        int i;
+        int endPos;
+        int curPos;
     public:
-        explicit Iterator(T* t, int i): t{t}, i{i} {}
+        explicit Iterator(T* t, int endPos, int curPos): t{t}, endPos{endPos}, curPos{curPos} {}
         T& operator*() const {
             return *t;
         }
@@ -107,7 +108,7 @@ public:
             return *this;
         }
         Iterator& operator++(int) {
-            return ++(*this); // or ++this?
+            return ++(*this);
         }
         bool operator==(const Iterator& other) {
             return t == other.t;
@@ -116,19 +117,22 @@ public:
             return !(*this==other);
         }
         Iterator operator+(int num) {
-            if (num < i && num > -1) {
-                return Iterator{t+num, num};
+            if (curPos + num > -1 && curPos + num <= endPos) { // why can't this just be < instead of <=
+                return Iterator{t+num, endPos, curPos + num};
             } else {
-                return Iterator{&(t[i]), i}; // same as Iterator end(). out_of_range
+                return Iterator{&(t[endPos]), endPos, endPos}; // same as Iterator end(). which means out_of_range
             }
-            
+        }
+        Iterator operator-(int num) {
+            num *= -1;
+            return (*this)+num; // invoke operator+
         }
     };
     Iterator begin() {
-        return Iterator{array, index+1};
+        return Iterator{array, index+1, 0};
     }
     Iterator end() {
-        return Iterator{&(array[index+1]), index+1};
+        return Iterator{&(array[index+1]), index+1, index+1};
     }
     
     
@@ -178,9 +182,27 @@ public:
             size = 0;
         } else if (index > -1) {
             //delete array[index];
-            --index;
             --size;
+            --index;
         }
+    }
+    void erase(Iterator position) {
+        for (auto it = position; it != end(); ++it) {
+            *it = *(it+1); // overwrite the value of current position with the value of next
+        }
+        --size;
+        --index;
+    }
+    void erase(Iterator first, Iterator last) {
+        //std::cout << "*last == " << *last << std::endl;
+        //std::cout << "*(last+1) == " << *(last+1) << std::endl;
+        int count = 0;
+        for (auto& it = first; it != last+1; ++it) {
+            ++count;
+            *it = *(last+count);
+        }
+        size -= count;
+        index -= count;
     }
 };
 

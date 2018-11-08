@@ -101,26 +101,28 @@ public:
     public:
         explicit Iterator(T* t, int endPos, int curPos): t{t}, endPos{endPos}, curPos{curPos} {}
         T& operator*() const {
-            return *t;
+            return t[curPos];
         }
         Iterator& operator++() {
-            ++t;
+            if (curPos < endPos) {
+                ++curPos;
+            }
             return *this;
         }
         Iterator& operator++(int) {
             return ++(*this);
         }
         bool operator==(const Iterator& other) {
-            return t == other.t;
+            return curPos == other.curPos;
         }
         bool operator!=(const Iterator& other) {
-            return !(*this==other);
+            return !(*this==other); // invoke operator==
         }
         Iterator operator+(int num) {
             if (curPos + num > -1 && curPos + num < endPos) {
-                return Iterator{t+num, endPos, curPos + num};
+                return Iterator{t, endPos, curPos + num};
             } else {
-                return Iterator{&(t[endPos-curPos]), endPos, endPos}; // same as Iterator end(). which means out_of_range
+                return Iterator{t, endPos, endPos}; // same as Iterator end(). which means out_of_range
             }
         }
         Iterator operator-(int num) {
@@ -132,7 +134,7 @@ public:
         return Iterator{array, index+1, 0};
     }
     Iterator end() {
-        return Iterator{&(array[index+1]), index+1, index+1};
+        return Iterator{array, index+1, index+1};
     }
     
     
@@ -194,8 +196,6 @@ public:
         --index;
     }
     void erase(Iterator first, Iterator last) {
-        //std::cout << "*last == " << *last << std::endl;
-        //std::cout << "*(last+1) == " << *(last+1) << std::endl;
         int count = 0;
         for (auto& it = first; it != last+1; ++it) {
             ++count;

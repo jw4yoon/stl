@@ -46,13 +46,18 @@ int main(int argc, const char * argv[]) {
     initWithIL.pop_back();
     
     std::cout << "loop start" << std::endl;
-    for (MyVector<int>::Iterator it = initWithIL.begin()+4; it != initWithIL.end(); ++it) {
+    for (MyVector<int>::Iterator it = initWithIL.begin(); it != initWithIL.end(); ++it) {
         std::cout << *it << std::endl;
     }
     
     MyVector<int> one{1};
     std::cout << "here " << one[0] << std::endl;
     one.pop_back();
+    
+    initWithIL.erase(initWithIL.begin()+1, initWithIL.begin()+4);
+    for (MyVector<int>::Iterator it = initWithIL.begin(); it != initWithIL.end(); ++it) {
+        std::cout << *it << std::endl;
+    }
 
     /*
     MyVector<int*> pointerVec;

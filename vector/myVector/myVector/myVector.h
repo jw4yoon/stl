@@ -117,10 +117,10 @@ public:
             return !(*this==other);
         }
         Iterator operator+(int num) {
-            if (curPos + num > -1 && curPos + num <= endPos) { // why can't this just be < instead of <=
+            if (curPos + num > -1 && curPos + num < endPos) {
                 return Iterator{t+num, endPos, curPos + num};
             } else {
-                return Iterator{&(t[endPos]), endPos, endPos}; // same as Iterator end(). which means out_of_range
+                return Iterator{&(t[endPos-curPos]), endPos, endPos}; // same as Iterator end(). which means out_of_range
             }
         }
         Iterator operator-(int num) {

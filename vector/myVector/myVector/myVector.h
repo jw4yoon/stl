@@ -204,6 +204,28 @@ public:
         size -= count;
         index -= count;
     }
+    Iterator insert(Iterator position, const T& value) { // returns an iterator that points to the newly inserted value
+        if (position == end()) { // when the new value needs to be attached at the end
+            push_back(value);
+            return position;
+        }
+        T prevVal = *position;
+        *position = value;
+        auto it = position+1;
+        T temp;
+        for (;it != end(); ++it) {
+            temp = *it;
+            *it = prevVal;
+            prevVal = temp;
+        }
+        if (size == index - 1) {
+            reSize(array, size, size*2);
+        }
+        *it = prevVal;
+        ++index;
+        return position;
+    }
+    //Iterator insert(Iterator position, int numInsert, const T& value) {}
 };
 
 

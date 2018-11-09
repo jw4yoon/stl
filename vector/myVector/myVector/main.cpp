@@ -13,6 +13,11 @@
 int main(int argc, const char * argv[]) {
     MyVector<int> basicVec;
     basicVec.push_back(1);
+    
+    MyVector<int> initSizeVec(10, 0);
+    for (const auto& elem : initSizeVec) {
+        std::cout << elem << std::endl;
+    }
 
     MyVector<int> initWithIL{10, 20, 30, 40, 50};
 
@@ -54,10 +59,29 @@ int main(int argc, const char * argv[]) {
     std::cout << "here " << one[0] << std::endl;
     one.pop_back();
     
-    initWithIL.erase(initWithIL.begin()+1, initWithIL.begin()+4);
+    MyVector<int> testEraseInsert{1,2,3};
+    testEraseInsert.erase(testEraseInsert.begin()+1);
+    for (const auto& elem : testEraseInsert) {
+        std::cout << elem << std::endl;
+    }
+    
+    initWithIL.erase(initWithIL.begin()+1, initWithIL.begin()+3);
     for (MyVector<int>::Iterator it = initWithIL.begin(); it != initWithIL.end(); ++it) {
         std::cout << *it << std::endl;
     }
+    
+    testEraseInsert.insert(testEraseInsert.begin(), 4);
+    for (const auto& elem : testEraseInsert) {
+        std::cout << elem << std::endl;
+    }
+    
+    /*
+    std::vector<int> testing{1,2,3};
+    testing.insert(testing.begin()+10, 4);
+    for (const auto& elem : testing) {
+        std::cout << elem << std::endl;
+    }
+     */
 
     /*
     MyVector<int*> pointerVec;

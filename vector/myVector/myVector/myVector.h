@@ -44,7 +44,15 @@ public:
     MyVector() { // basic constructor
         std::cout << "Basic constructor called" << std::endl;
     }
-    MyVector(std::initializer_list<T> il) { // constructor with initializer_list
+    explicit MyVector(int numSize, int value) {
+        std::cout << "Constructor with numSize and value" << std::endl;
+        reSize(array, size, numSize);
+        for (int i = 0; i < numSize; ++i) {
+            array[i] = value;
+        }
+        index = numSize - 1;
+    }
+    explicit MyVector(std::initializer_list<T> il) { // constructor with initializer_list
         std::cout << "Constructor with initializer_list called" << std::endl;
         size_t listSize = il.size();
         reSize(array, size, (int)listSize); // why does reSize(array, size, size*2) work?

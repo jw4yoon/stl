@@ -13,6 +13,11 @@
 int main(int argc, const char * argv[]) {
     MyVector<int> basicVec;
     basicVec.push_back(1);
+    
+    MyVector<int> initSizeVec(10, 0);
+    for (const auto& elem : initSizeVec) {
+        std::cout << elem << std::endl;
+    }
 
     MyVector<int> initWithIL{10, 20, 30, 40, 50};
 

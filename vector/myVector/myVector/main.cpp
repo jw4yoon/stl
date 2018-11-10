@@ -8,9 +8,13 @@
 
 #include <iostream>
 #include "myVector.h"
+#include "runTests.hpp"
 #include <vector>
 
 int main(int argc, const char * argv[]) {
+    RunTests runThem;
+    runThem.run();
+    /*
     MyVector<int> basicVec;
     basicVec.push_back(1);
     
@@ -75,7 +79,7 @@ int main(int argc, const char * argv[]) {
         std::cout << elem << std::endl;
     }
     
-    /*
+    
     std::vector<int> testing{1,2,3};
     testing.insert(testing.begin()+10, 4);
     for (const auto& elem : testing) {
@@ -92,5 +96,6 @@ int main(int argc, const char * argv[]) {
     MyVector<int*> ptrVec{intPtr};
     std::cout << "ptrVec[0] == " << *ptrVec[0] << std::endl;
      */
+    
     return 0;
 }

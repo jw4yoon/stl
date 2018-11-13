@@ -197,15 +197,15 @@ public:
             cap = 0;
         } else if (index > -1) {
             //delete array[index];
-            --cap;
+            //--cap;
             --index;
         }
     }
     void erase(Iterator position) {
-        for (auto it = position; it != end(); ++it) {
+        for (auto it = position; it != end()-1; ++it) {
             *it = *(it+1); // overwrite the value of current position with the value of next
         }
-        --cap;
+        //--cap;
         --index;
     }
     void erase(Iterator first, Iterator last) {
@@ -214,7 +214,7 @@ public:
             ++count;
             *it = *(last+count);
         }
-        cap -= count;
+        //cap -= count;
         index -= count;
     }
     Iterator insert(Iterator position, const T& value) { // returns an iterator that points to the newly inserted value
@@ -222,19 +222,20 @@ public:
             push_back(value);
             return position;
         }
+
         T prevVal = *position;
         *position = value;
         auto it = position+1;
         T temp;
-        if (cap == index + 1) {
-            reSize(array, cap, cap*2);
-        }
         for (;it != end(); ++it) {
             temp = *it;
             *it = prevVal;
             prevVal = temp;
         }
-
+        if (cap == index + 1) {
+            reSize(array, cap, cap*2); // this mix up the address of the position
+        }
+        it = end(); // reassign the value since we might have changed the address of the array when calling reSize
         *it = prevVal;
         ++index;
         return position;

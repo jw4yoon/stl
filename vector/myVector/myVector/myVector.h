@@ -226,14 +226,15 @@ public:
         *position = value;
         auto it = position+1;
         T temp;
+        if (cap == index + 1) {
+            reSize(array, cap, cap*2);
+        }
         for (;it != end(); ++it) {
             temp = *it;
             *it = prevVal;
             prevVal = temp;
         }
-        if (cap == index - 1) {
-            reSize(array, cap, cap*2);
-        }
+
         *it = prevVal;
         ++index;
         return position;

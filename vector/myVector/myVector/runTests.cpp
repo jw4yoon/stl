@@ -134,7 +134,7 @@ void RunTests::testInsert() {
     MyVector<int> vec{1,2,4};
     vec.insert(vec.begin(), 0);
     vec.insert(vec.begin()+3, 3);
-    vec.insert(vec.end()-1, 5);
+    vec.insert(vec.end(), 5);
     int count = 0;
     for (const auto& elem : vec) {
         assert(elem == 0+count);

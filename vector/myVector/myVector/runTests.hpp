@@ -26,6 +26,7 @@ private:
     void testIterator();
     void testPopBack();
     void testInsert();
+    void testInsertReturnValue();
     void testErase();
 };
 

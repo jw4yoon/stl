@@ -143,6 +143,13 @@ void RunTests::testInsert() {
     assert(count == 6);
 }
 
+void RunTests::testInsertReturnValue() {
+    MyVector<int> vec{1,2,4};
+    auto it = vec.begin();
+    it = vec.insert(it, 0);
+    assert(it == vec.begin());
+}
+
 void RunTests::testErase() {
     MyVector<int> vecToErase{1,2,3,4,5};
     vecToErase.erase(vecToErase.begin());
@@ -150,6 +157,7 @@ void RunTests::testErase() {
     int count = 0;
     for (auto it = vecToErase.begin(); it != vecToErase.end(); ++it) {
         assert(*it == 2+count);
+        ++count;
     }
     assert(count == 4);
     vecToErase.erase(vecToErase.begin()+1, vecToErase.end()-2);
@@ -172,5 +180,6 @@ void RunTests::run() {
     testIterator();
     testPopBack();
     testInsert();
+    testInsertReturnValue();
     testErase();
 }

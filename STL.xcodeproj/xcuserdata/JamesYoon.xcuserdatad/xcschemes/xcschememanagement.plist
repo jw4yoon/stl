@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>myVector.xcscheme</key>
+		<key>STL.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>D4C06A43218A798200201D84</key>
+		<key>D40BBFDD219BE01000B0EC4A</key>
 		<dict>
 			<key>primary</key>
 			<true/>

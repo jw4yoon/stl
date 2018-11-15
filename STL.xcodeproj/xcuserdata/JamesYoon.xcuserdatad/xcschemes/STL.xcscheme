@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D4C06A43218A798200201D84"
-               BuildableName = "myVector"
-               BlueprintName = "myVector"
-               ReferencedContainer = "container:myVector.xcodeproj">
+               BlueprintIdentifier = "D40BBFDD219BE01000B0EC4A"
+               BuildableName = "STL"
+               BlueprintName = "STL"
+               ReferencedContainer = "container:STL.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D4C06A43218A798200201D84"
-            BuildableName = "myVector"
-            BlueprintName = "myVector"
-            ReferencedContainer = "container:myVector.xcodeproj">
+            BlueprintIdentifier = "D40BBFDD219BE01000B0EC4A"
+            BuildableName = "STL"
+            BlueprintName = "STL"
+            ReferencedContainer = "container:STL.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D4C06A43218A798200201D84"
-            BuildableName = "myVector"
-            BlueprintName = "myVector"
-            ReferencedContainer = "container:myVector.xcodeproj">
+            BlueprintIdentifier = "D40BBFDD219BE01000B0EC4A"
+            BuildableName = "STL"
+            BlueprintName = "STL"
+            ReferencedContainer = "container:STL.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D4C06A43218A798200201D84"
-            BuildableName = "myVector"
-            BlueprintName = "myVector"
-            ReferencedContainer = "container:myVector.xcodeproj">
+            BlueprintIdentifier = "D40BBFDD219BE01000B0EC4A"
+            BuildableName = "STL"
+            BlueprintName = "STL"
+            ReferencedContainer = "container:STL.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

@@ -1,17 +1,22 @@
 //
-//  runTests.hpp
-//  myVector
+//  runVectorTests.h
+//  STL
 //
-//  Created by James Jae Won Yoon on 2018-11-09.
+//  Created by James Jae Won Yoon on 2018-11-13.
 //  Copyright © 2018 James Jae Won Yoon. All rights reserved.
 //
 
-#ifndef runTests_hpp
-#define runTests_hpp
+#ifndef runVectorTests_h
+#define runVectorTests_h
 
-class RunTests {
+#include "runTests.h"
+#include <string>
+
+class RunVectorTests : public RunTests {
 public:
-    void run(); // returns 0 if all tests pass, 1 otherwise
+    void run() override;
+    std::string getName() override;
+    RunVectorTests();
 private:
     void testBasic();
     void vectorInitWithSize();
@@ -28,6 +33,9 @@ private:
     void testInsert();
     void testInsertReturnValue();
     void testErase();
+    
+    std::string _name;
 };
 
-#endif /* runTests_hpp */
+#endif /* runVectorTests_h */
+

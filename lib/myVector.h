@@ -1,6 +1,6 @@
 //
 //  myVector.h
-//  myVector
+//  STL
 //
 //  Created by James Jae Won Yoon on 2018-10-31.
 //  Copyright © 2018 James Jae Won Yoon. All rights reserved.

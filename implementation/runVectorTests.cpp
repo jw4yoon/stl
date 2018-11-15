@@ -1,23 +1,25 @@
 //
-//  runTests.cpp
-//  myVector
+//  runVectorTests.cpp
+//  STL
 //
 //  Created by James Jae Won Yoon on 2018-11-09.
 //  Copyright © 2018 James Jae Won Yoon. All rights reserved.
 //
 
-#include "runTests.hpp"
+#include "runVectorTests.h"
 #include "myVector.h"
 #include <assert.h>
 
-void RunTests::testBasic() {
+RunVectorTests::RunVectorTests() : _name{"MyVector"} {}
+
+void RunVectorTests::testBasic() {
     MyVector<int> basicVec;
     basicVec.push_back(1);
     assert(basicVec.size() == 1);
     assert(basicVec[0] == 1);
 }
 
-void RunTests::vectorInitWithSize() {
+void RunVectorTests::vectorInitWithSize() {
     MyVector<int> initSizeVec(10, 0);
     assert(initSizeVec.size() == 10);
     for (const auto& elem : initSizeVec) {
@@ -25,7 +27,7 @@ void RunTests::vectorInitWithSize() {
     }
 }
 
-void RunTests::vectorInitWithInitializerList() {
+void RunVectorTests::vectorInitWithInitializerList() {
     MyVector<int> initWithIL{10, 20, 30, 40, 50};
     assert(initWithIL.size() == 5);
     assert(initWithIL[0] == 10);
@@ -35,7 +37,7 @@ void RunTests::vectorInitWithInitializerList() {
     assert(initWithIL[4] == 50);
 }
 
-void RunTests::testCopyConstructor() {
+void RunVectorTests::testCopyConstructor() {
     MyVector<int> original{1,2};
     MyVector<int> copy = original;
     assert(original.size() == copy.size());
@@ -43,7 +45,7 @@ void RunTests::testCopyConstructor() {
     assert(original[1] == copy[1]);
 }
 
-void RunTests::testCopyAssignmentOperator() {
+void RunVectorTests::testCopyAssignmentOperator() {
     MyVector<int> original{1,2};
     MyVector<int> copy;
     copy = original;
@@ -52,7 +54,7 @@ void RunTests::testCopyAssignmentOperator() {
     assert(original[1] == copy[1]);
 }
 
-void RunTests::testMoveConstructor() {
+void RunVectorTests::testMoveConstructor() {
     MyVector<int> original{1,2};
     MyVector<int> moveConst(std::move(original));
     assert(original.empty());
@@ -61,7 +63,7 @@ void RunTests::testMoveConstructor() {
     assert(moveConst[1] == 2);
 }
 
-void RunTests::testMoveAssignmentOperator() {
+void RunVectorTests::testMoveAssignmentOperator() {
     MyVector<int> original{1,2};
     MyVector<int> moveAssign;
     moveAssign = std::move(original);
@@ -71,7 +73,7 @@ void RunTests::testMoveAssignmentOperator() {
     assert(moveAssign[1] == 2);
 }
 
-void RunTests::testFrontAndBack() {
+void RunVectorTests::testFrontAndBack() {
     MyVector<int> vec{0};
     assert(vec.front() == 0);
     assert(vec.back() == 0);
@@ -84,7 +86,7 @@ void RunTests::testFrontAndBack() {
     assert(longerVec.back() == 1);
 }
 
-void RunTests::testCapacity() {
+void RunVectorTests::testCapacity() {
     MyVector<int> cap{1};
     cap.push_back(2);
     cap.push_back(3);
@@ -92,12 +94,12 @@ void RunTests::testCapacity() {
     assert(cap.capacity() == 4);
 }
 
-void RunTests::testData() {
+void RunVectorTests::testData() {
     MyVector<int> vecData{5,4};
     assert(*(vecData.data()) == 5);
 }
 
-void RunTests::testIterator() {
+void RunVectorTests::testIterator() {
     MyVector<int> manyElements{1,2,3,4,5};
     int count = 0;
     for (const auto& elem : manyElements) {
@@ -122,7 +124,7 @@ void RunTests::testIterator() {
     assert(count == 3);
 }
 
-void RunTests::testPopBack() {
+void RunVectorTests::testPopBack() {
     MyVector<int> vec{1,3};
     vec.pop_back();
     assert(vec.size() == 1);
@@ -130,7 +132,7 @@ void RunTests::testPopBack() {
     assert(vec.empty());
 }
 
-void RunTests::testInsert() {
+void RunVectorTests::testInsert() {
     MyVector<int> vec{1,2,4};
     vec.insert(vec.begin(), 0);
     vec.insert(vec.begin()+3, 3);
@@ -143,14 +145,14 @@ void RunTests::testInsert() {
     assert(count == 6);
 }
 
-void RunTests::testInsertReturnValue() {
+void RunVectorTests::testInsertReturnValue() {
     MyVector<int> vec{1,2,4};
     auto it = vec.begin();
     it = vec.insert(it, 0);
     assert(it == vec.begin());
 }
 
-void RunTests::testErase() {
+void RunVectorTests::testErase() {
     MyVector<int> vecToErase{1,2,3,4,5};
     vecToErase.erase(vecToErase.begin());
     assert(vecToErase.size() == 4);
@@ -166,7 +168,7 @@ void RunTests::testErase() {
     assert(vecToErase[1] == 5);
 }
 
-void RunTests::run() {
+void RunVectorTests::run() {
     testBasic();
     vectorInitWithSize();
     vectorInitWithInitializerList();
@@ -182,4 +184,8 @@ void RunTests::run() {
     testInsert();
     testInsertReturnValue();
     testErase();
+}
+
+std::string RunVectorTests::getName() {
+    return _name;
 }

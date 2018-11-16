@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		D40BBFE2219BE01000B0EC4A /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40BBFE1219BE01000B0EC4A /* main.cpp */; };
 		D40BBFF8219BE6F800B0EC4A /* runVectorTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D40BBFF7219BE6F800B0EC4A /* runVectorTests.cpp */; };
+		D4652C6B219E5D1A003B140B /* runMapTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4652C6A219E5D1A003B140B /* runMapTests.cpp */; };
+		D4652C70219E6AD1003B140B /* runPairTests.cpp in Sources */ = {isa = PBXBuildFile; fileRef = D4652C6F219E6AD1003B140B /* runPairTests.cpp */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -30,6 +32,13 @@
 		D40BBFF5219BE6E300B0EC4A /* runTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = runTests.h; path = lib/runTests.h; sourceTree = "<group>"; };
 		D40BBFF6219BE6E300B0EC4A /* runVectorTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = runVectorTests.h; path = lib/runVectorTests.h; sourceTree = "<group>"; };
 		D40BBFF7219BE6F800B0EC4A /* runVectorTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = runVectorTests.cpp; path = implementation/runVectorTests.cpp; sourceTree = "<group>"; };
+		D4652C67219E585A003B140B /* myMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myMap.h; path = lib/myMap.h; sourceTree = "<group>"; };
+		D4652C68219E5CB2003B140B /* common.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = common.h; path = lib/common.h; sourceTree = "<group>"; };
+		D4652C6A219E5D1A003B140B /* runMapTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = runMapTests.cpp; path = implementation/runMapTests.cpp; sourceTree = "<group>"; };
+		D4652C6C219E5D41003B140B /* runMapTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = runMapTests.h; path = lib/runMapTests.h; sourceTree = "<group>"; };
+		D4652C6D219E68CA003B140B /* myPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = myPair.h; path = lib/myPair.h; sourceTree = "<group>"; };
+		D4652C6E219E6A22003B140B /* runPairTests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = runPairTests.h; path = lib/runPairTests.h; sourceTree = "<group>"; };
+		D4652C6F219E6AD1003B140B /* runPairTests.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = runPairTests.cpp; path = implementation/runPairTests.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +82,8 @@
 			isa = PBXGroup;
 			children = (
 				D40BBFF7219BE6F800B0EC4A /* runVectorTests.cpp */,
+				D4652C6A219E5D1A003B140B /* runMapTests.cpp */,
+				D4652C6F219E6AD1003B140B /* runPairTests.cpp */,
 			);
 			name = implementation;
 			sourceTree = "<group>";
@@ -83,6 +94,11 @@
 				D40BBFF4219BE6E300B0EC4A /* myVector.h */,
 				D40BBFF5219BE6E300B0EC4A /* runTests.h */,
 				D40BBFF6219BE6E300B0EC4A /* runVectorTests.h */,
+				D4652C67219E585A003B140B /* myMap.h */,
+				D4652C68219E5CB2003B140B /* common.h */,
+				D4652C6C219E5D41003B140B /* runMapTests.h */,
+				D4652C6D219E68CA003B140B /* myPair.h */,
+				D4652C6E219E6A22003B140B /* runPairTests.h */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -145,7 +161,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				D40BBFF8219BE6F800B0EC4A /* runVectorTests.cpp in Sources */,
+				D4652C70219E6AD1003B140B /* runPairTests.cpp in Sources */,
 				D40BBFE2219BE01000B0EC4A /* main.cpp in Sources */,
+				D4652C6B219E5D1A003B140B /* runMapTests.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

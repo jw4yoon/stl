@@ -10,18 +10,44 @@
 #define myMap_h
 
 #include "common.h"
+#include "myPair.h"
+#include "myVector.h"
 
 template<class Key, class Value>
 class MyMap {
+    MyVector<MyPair<Key, Value>> _myMap;
+public:
+    MyMap(){
+        std::cout << "Basic constructor called" << std::endl;
+    }
+    MyMap(const MyMap& other) : _myMap(other._myMap) {
+        std::cout << "Copy constructor called" << std::endl;
+    }
+    MyMap& operator=(const MyMap& other) {
+        std::cout << "Copy assignment operator called" << std::endl;
+        if (this != &other) {
+            _myMap = other._myMap;
+        }
+        return *this;
+    }
+    MyMap(const MyMap&& other) : _myMap(std::move(other._myMap)) {
+        std::cout << "Move constructor called" << std::endl;
+    }
+    MyMap& operator=(const MyMap&& other) {
+        std::cout << "Move assignment operator called" << std::endl;
+        if (this != &other) {
+            _myMap = std::move(other._myMap);
+        }
+        return *this;
+    }
     
-    // need to make the key value as a pair. Implement MyPair class first
-    Key *_keys = nullptr;
-    int _keyCapacity = 0;
-    int _keyIndex = -1;
     
-    Value *_values = nullptr;
-    int _valueCapacity = 0;
-    int _valueIndex = -1;
+    /*
+    MyMap& operator[](Key key) {
+    }
+     */
+    
+    
     
 };
 

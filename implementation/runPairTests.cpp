@@ -50,7 +50,8 @@ void RunPairTests::testCopyAssignmentOperator() {
 
 void RunPairTests::testMakePair() {
     MyPair<int, std::string> pair;
-    pair = MyPair<int, std::string>::make_pair(1, "Hello world!");
+    //pair = MyPair<int, std::string>::make_pair(1, "Hello world!");
+    pair = Pair::make_pair(1, std::string("Hello world!"));
     assert(pair.first == 1);
     assert(pair.second == std::string("Hello world!"));
     

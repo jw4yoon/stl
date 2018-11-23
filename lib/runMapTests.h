@@ -17,6 +17,7 @@ public:
     void run() override;
     std::string getName() override;
     RunMapTests();
+    void testBasic();
 private:    
     std::string _name;
 };

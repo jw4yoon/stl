@@ -19,6 +19,7 @@
 template<class Key, class Value>
 class MyMap {
     MyVector<MyPair<Key, Value>> _myVector;
+
 public:
     MyMap(){
         std::cout << "Basic constructor called" << std::endl;
@@ -26,7 +27,13 @@ public:
     explicit MyMap(std::initializer_list<MyPair<Key, Value>> il) {
         std::cout << "Constructor with initializer_list" << std::endl;
         for (auto elem : il) { // but need to sort this in order to perform O(logn) search
-            _myVector.push_back(elem);
+            auto isFound = find(elem.first);
+            //if (isFound != _myVector.end()) {
+            if (isFound != end()) {
+                isFound->second = elem.second;
+            } else {
+                _myVector.insert(isFound, Pair::make_pair(elem.first, elem.second));
+            }
         }
     }
     MyMap(const MyMap& other) : _myVector(other._myVector) {
@@ -50,11 +57,11 @@ public:
         return *this;
     }
     class Iterator {
-        MyVector<MyPair<Key, Value>>::Iterator _it;
+        typename MyVector<MyPair<Key, Value>>::Iterator _it;
     public:
-        explicit Iterator(MyVector<MyPair<Key, Value>>::Iterator it): _it{it} {}
-        T& operator*() const {
-            return _it[curPos];
+        explicit Iterator(typename MyVector<MyPair<Key, Value>>::Iterator it): _it{it} {}
+        typename MyVector<MyPair<Key, Value>>::Iterator& operator*() {
+            return *_it;
         }
         Iterator& operator++() {
             ++_it;
@@ -64,7 +71,7 @@ public:
             return ++(*this);
         }
         bool operator==(const Iterator& other) {
-            return _it == other;
+            return _it == other._it;
         }
         bool operator!=(const Iterator& other) {
             return !(*this==other); // invoke operator==
@@ -81,6 +88,40 @@ public:
     }
     Iterator end() {
         return Iterator{_myVector.end()};
+    }
+
+    Iterator find(Key key) {
+        return placeToInsert(key);
+    }
+
+private:
+    Iterator placeToInsert(Key key) { //
+        // perform binary search
+        int high = (int)_myVector.size() - 1;
+        int middle;
+        int low = 0;
+        if (high == -1) { // the vector is empty
+            return Iterator{_myVector.begin()};
+        }
+        while (low <= high) {
+            middle = (high + low) / 2;
+            if (_myVector[middle].first == key) {
+                return Iterator{_myVector.begin()+middle};
+            } else if (middle == 0) {
+                return Iterator{_myVector.begin()};
+            } else if (_myVector[middle].first > key && (middle > 0 && _myVector[middle-1].first < key)) {
+                return Iterator{_myVector.begin()+(middle-1)};
+            } else if (_myVector[middle].first > key) {
+                high = middle - 1;
+            } else if (_myVector[middle].first < key) {
+                low = middle + 1;
+            }
+        }
+        if (middle == 0) {
+            return Iterator{_myVector.begin()};
+        } else {
+            return Iterator{_myVector.end()};
+        }
     }
     
     /*

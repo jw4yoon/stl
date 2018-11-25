@@ -6,6 +6,8 @@
 //  Copyright © 2018 James Jae Won Yoon. All rights reserved.
 //
 
+#include <assert.h>
+
 #include "runTests.h"
 #include "runMapTests.h"
 #include "myMap.h"

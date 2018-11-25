@@ -112,7 +112,7 @@ public:
             return ++(*this);
         }
         bool operator==(const Iterator& other) {
-            return curPos == other.curPos;
+            return t == other.t && curPos == other.curPos; // fixed this
         }
         bool operator!=(const Iterator& other) {
             return !(*this==other); // invoke operator==
@@ -127,6 +127,9 @@ public:
         Iterator operator-(int num) {
             num *= -1;
             return (*this)+num; // invoke operator+
+        }
+        int getCurPos() {
+            return curPos;
         }
     };
     Iterator begin() {
@@ -224,10 +227,8 @@ public:
         if (_cap == _index + 1) {
             reSize(_array, _cap, _cap*2); // this mix up the address of the position
         }
-        it = end(); // reassign the value since we might have changed the address of the _array when calling reSize
-        *it = prevVal;
-        ++_index;
-        return position;
+        push_back(prevVal);
+        return Iterator{_array, _cap, position.getCurPos()};
     }
     //Iterator insert(Iterator position, int numInsert, const T& value) {}
 };

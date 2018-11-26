@@ -18,6 +18,7 @@ public:
     std::string getName() override;
     RunMapTests();
     void testBasic();
+    void checkElements();
 private:    
     std::string _name;
 };

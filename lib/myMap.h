@@ -46,43 +46,7 @@ public:
         }
         return *this;
     }
-//    class Iterator {
-//        typename MyVector<MyPair<Key, Value>>::Iterator _it;
-//    public:
-//        explicit Iterator(typename MyVector<MyPair<Key, Value>>::Iterator it): _it{it} {}
-//        typename MyVector<MyPair<Key, Value>>::Iterator& operator*() {
-//            return *_it;
-//        }
-//        Iterator& operator++() {
-//            ++_it;
-//            return *this;
-//        }
-//        Iterator& operator++(int) {
-//            return ++(*this);
-//        }
-//        bool operator==(const Iterator& other) {
-//            return _it == other._it;
-//        }
-//        bool operator!=(const Iterator& other) {
-//            return !(*this==other); // invoke operator==
-//        }
-//        Iterator operator+(int num) {
-//            return _it+num;
-//        }
-//        Iterator operator-(int num) {
-//            return _it-num;
-//        }
-//    };
-//    Iterator begin() {
-//        return Iterator{_myVector.begin()};
-//    }
-//    Iterator end() {
-//        return Iterator{_myVector.end()};
-//    }
-//
-//    Iterator find(Key key) {
-//        return placeToInsert(key);
-//    }
+
     class Iterator {
         MyVector<MyPair<Key, Value>> vec;
         int curPos;
@@ -130,7 +94,7 @@ public:
         return Iterator{_myVector, 0};
     }
     Iterator end() {
-        return Iterator{_myVector, (int)_myVector.size()};
+        return Iterator{_myVector, (int)_myVector.size()+1};
     }
     Iterator find(Key key) {
         return placeToInsert(key);
@@ -159,7 +123,13 @@ public:
     explicit MyMap(std::initializer_list<MyPair<Key, Value>> il) {
         std::cout << "Constructor with initializer_list" << std::endl;
         for (auto elem : il) { // but need to sort this in order to perform O(logn) search
+            std::cout << elem.first <<  " <- elem.first " << elem.second << " <- elem.second" << std::endl;
             //auto isFound = find(elem.first);
+            if (_myVector.size() == 0) {
+                _myVector.push_back(elem);
+                continue;
+            }
+            
             Iterator isFound = find(elem.first);
             //if (isFound != _myVector.end()) {
             if (isFound != end()) {
@@ -186,10 +156,10 @@ private:
             if (_myVector[middle].first == key) {
                 //return Iterator{_myVector, middle};
                 return begin()+middle;
-            } else if (middle == 0) {
+            } /*else if (middle == 0) {
                 //return Iterator{_myVector, 0};
                 return begin();
-            } else if (_myVector[middle].first > key && (middle > 0 && _myVector[middle-1].first < key)) {
+            }*/ else if (_myVector[middle].first > key && (middle > 0 && _myVector[middle-1].first < key)) {
                 //return Iterator{_myVector.begin()+(middle-1)};
                 return begin()+(middle-1);
             } else if (_myVector[middle].first > key) {
@@ -198,6 +168,7 @@ private:
                 low = middle + 1;
             }
         }
+        middle = low;
         if (middle == 0) {
             return begin();
         } else {

@@ -48,10 +48,10 @@ public:
     }
 
     class Iterator {
-        MyVector<MyPair<Key, Value>> vec;
+        MyVector<MyPair<Key, Value>>& vec;
         int curPos;
     public:
-        explicit Iterator(MyVector<MyPair<Key, Value>> vec, int pos): vec{vec}, curPos{pos} {}
+        explicit Iterator(MyVector<MyPair<Key, Value>>& myVec, int pos): vec{myVec}, curPos{pos} {}
         MyPair<Key, Value>& operator*() {
             return vec[curPos];
         }
@@ -94,7 +94,7 @@ public:
         return Iterator{_myVector, 0};
     }
     Iterator end() {
-        return Iterator{_myVector, (int)_myVector.size()+1};
+        return Iterator{_myVector, (int)_myVector.size()};
     }
     Iterator find(Key key) {
         return placeToInsert(key);
@@ -117,22 +117,19 @@ public:
         }
         _myVector.push_back(prevPair);
         return Iterator{_myVector, position.getCurPos()};
-        return position;
     }
     
     explicit MyMap(std::initializer_list<MyPair<Key, Value>> il) {
         std::cout << "Constructor with initializer_list" << std::endl;
         for (auto elem : il) { // but need to sort this in order to perform O(logn) search
             std::cout << elem.first <<  " <- elem.first " << elem.second << " <- elem.second" << std::endl;
-            //auto isFound = find(elem.first);
             if (_myVector.size() == 0) {
                 _myVector.push_back(elem);
                 continue;
             }
             
             Iterator isFound = find(elem.first);
-            //if (isFound != _myVector.end()) {
-            if (isFound != end()) {
+            if (isFound != end() && isFound->first == elem.first) {
                 isFound->second = elem.second;
             } else {
                 insert(isFound, Pair::make_pair(elem.first, elem.second));
@@ -148,7 +145,6 @@ private:
         int middle = 0;
         int low = 0;
         if (high == -1) { // the vector is empty
-            //return Iterator{_myVector, 0};
             return begin();
         }
         while (low <= high) {
@@ -161,7 +157,7 @@ private:
                 return begin();
             }*/ else if (_myVector[middle].first > key && (middle > 0 && _myVector[middle-1].first < key)) {
                 //return Iterator{_myVector.begin()+(middle-1)};
-                return begin()+(middle-1);
+                return begin()+middle;
             } else if (_myVector[middle].first > key) {
                 high = middle - 1;
             } else if (_myVector[middle].first < key) {

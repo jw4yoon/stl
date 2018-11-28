@@ -194,12 +194,16 @@ public:
         }
     }
     void erase(Iterator position) {
-        for (auto it = position; it != end()-1; ++it) {
-            *it = *(it+1); // overwrite the value of current position with the value of next
+        if (position != end()) {
+            for (auto& it = position; it != end()-1; ++it) {
+                *it = *(it+1); // overwrite the value of current position with the value of next
+            }
+            //--_cap;
+            --_index;
         }
-        //--_cap;
-        --_index;
+
     }
+    // out of range results in undefined behaviour
     void erase(Iterator first, Iterator last) {
         int count = 0;
         for (auto& it = first; it != last+1; ++it) {

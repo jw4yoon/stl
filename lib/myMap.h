@@ -98,6 +98,12 @@ public:
     }
     Iterator find(Key key) {
         return placeToInsert(key);
+        //auto it = placeToInsert(key);
+        //if (it->first != key) {
+        //    return end();
+        //} else {
+        //    return it;
+        //}
     }
     
     Iterator insert(Iterator position, const MyPair<Key, Value>& pair) { // returns an iterator that points to the newly inserted value
@@ -138,6 +144,43 @@ public:
         }
     }
 
+    Value& operator[](Key key) {
+        if (empty()) {
+            _myVector.push_back({});
+            return begin()->second;
+        } else {
+            return find(key)->second;
+        }
+    }
+    
+    size_t size() {
+        return _myVector.size();
+    }
+    
+    bool empty() {
+        return _myVector.empty();
+    }
+
+    void erase(Iterator position) {
+        if (position != end()) {
+            auto vecIterator = _myVector.begin()+position.getCurPos();
+            _myVector.erase(vecIterator);
+        }
+    }
+    
+    void erase(Key key) {
+        auto isFound = find(key);
+        if (isFound != end()) {
+            erase(isFound);
+        }
+    }
+    
+    void erase(Iterator first, Iterator last) {
+        auto vecFirstIterator = _myVector.begin()+first.getCurPos();
+        auto vecLastIterator = _myVector.begin()+last.getCurPos();
+        _myVector.erase(vecFirstIterator, vecLastIterator);
+    }
+    
 private:
     Iterator placeToInsert(Key key) { //
         // perform binary search
@@ -165,20 +208,14 @@ private:
             }
         }
         middle = low;
+        //if (middle == 0 && low == 0) {
         if (middle == 0) {
             return begin();
         } else {
             return end();
         }
     }
-    
-    /*
-    MyMap& operator[](Key key) {
-    }
-     */
-    
-    
-    
+
 };
 
 #endif /* myMap_h */

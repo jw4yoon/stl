@@ -19,6 +19,12 @@ public:
     RunMapTests();
     void testBasic();
     void checkElements();
+    void checkMoreElements();
+    void overwriteValue();
+    void testEmptyAndSize();
+    void testFind();
+    void testInsert();
+    void testErase();
 private:    
     std::string _name;
 };

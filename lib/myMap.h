@@ -97,49 +97,28 @@ public:
         return Iterator{_myVector, (int)_myVector.size()};
     }
     Iterator find(Key key) {
-        return placeToInsert(key);
-        //auto it = placeToInsert(key);
-        //if (it->first != key) {
-        //    return end();
-        //} else {
-        //    return it;
-        //}
-    }
-    
-    Iterator insert(Iterator position, const MyPair<Key, Value>& pair) { // returns an iterator that points to the newly inserted value
-        if (position == end()) { // when the new value needs to be attached at the end
-            _myVector.push_back(pair);
-            return position;
+        auto it = placeToInsert(key);
+        if (it != end() && it->first != key) {
+            return end();
+        } else {
+            return it;
         }
-        
-        MyPair<Key, Value> prevPair = *position;
-        *position = pair;
-        auto it = position+1;
-        MyPair<Key, Value> temp;
-        for (;it != end(); ++it) {
-            temp = *it;
-            *it = prevPair;
-            prevPair = temp;
-        }
-        _myVector.push_back(prevPair);
-        return Iterator{_myVector, position.getCurPos()};
     }
-    
+
     explicit MyMap(std::initializer_list<MyPair<Key, Value>> il) {
         std::cout << "Constructor with initializer_list" << std::endl;
-        for (auto elem : il) { // but need to sort this in order to perform O(logn) search
+        for (auto elem : il) { // need to sort this in order to perform O(logn) search
             std::cout << elem.first <<  " <- elem.first " << elem.second << " <- elem.second" << std::endl;
             if (_myVector.size() == 0) {
                 _myVector.push_back(elem);
                 continue;
             }
-            
-            Iterator isFound = find(elem.first);
+
+            Iterator isFound = placeToInsert(elem.first);
             if (isFound != end() && isFound->first == elem.first) {
                 isFound->second = elem.second;
             } else {
-                insert(isFound, Pair::make_pair(elem.first, elem.second));
-                //_myVector.insert(isFound, Pair::make_pair(elem.first, elem.second));
+                insertAtPosition(isFound, Pair::make_pair(elem.first, elem.second));
             }
         }
     }
@@ -147,9 +126,17 @@ public:
     Value& operator[](Key key) {
         if (empty()) {
             _myVector.push_back({});
+            begin()->first = key;
             return begin()->second;
         } else {
-            return find(key)->second;
+            auto placeFound = placeToInsert(key);
+            if (placeFound->first == key) { // pair already exists
+                return placeFound->second;
+            } else { // pair doesn't exist
+                insertAtPosition(placeFound, {});
+                placeFound->first = key;
+                return placeFound->second;
+            }
         }
     }
     
@@ -181,8 +168,13 @@ public:
         _myVector.erase(vecFirstIterator, vecLastIterator);
     }
     
+    void insert(MyPair<Key, Value> pair) {
+        auto placeFound = placeToInsert(pair.first);
+        insertAtPosition(placeFound, pair);
+    }
+    
 private:
-    Iterator placeToInsert(Key key) { //
+    Iterator placeToInsert(Key key) {
         // perform binary search
         int high = (int)_myVector.size() - 1;
         int middle = 0;
@@ -193,13 +185,8 @@ private:
         while (low <= high) {
             middle = (high + low) / 2;
             if (_myVector[middle].first == key) {
-                //return Iterator{_myVector, middle};
                 return begin()+middle;
-            } /*else if (middle == 0) {
-                //return Iterator{_myVector, 0};
-                return begin();
-            }*/ else if (_myVector[middle].first > key && (middle > 0 && _myVector[middle-1].first < key)) {
-                //return Iterator{_myVector.begin()+(middle-1)};
+            } else if (_myVector[middle].first > key && (middle > 0 && _myVector[middle-1].first < key)) {
                 return begin()+middle;
             } else if (_myVector[middle].first > key) {
                 high = middle - 1;
@@ -207,13 +194,32 @@ private:
                 low = middle + 1;
             }
         }
-        middle = low;
-        //if (middle == 0 && low == 0) {
-        if (middle == 0) {
+        //middle = low;
+        if (middle == 0 && low == 0) {
+        //if (middle == 0) {
             return begin();
         } else {
             return end();
         }
+    }
+    
+    Iterator insertAtPosition(Iterator position, const MyPair<Key, Value>& pair) { // returns an iterator that points to the newly inserted value
+        if (position == end()) { // when the new value needs to be attached at the end
+            _myVector.push_back(pair);
+            return position;
+        }
+        
+        MyPair<Key, Value> prevPair = *position;
+        *position = pair;
+        auto it = position+1;
+        MyPair<Key, Value> temp;
+        for (;it != end(); ++it) {
+            temp = *it;
+            *it = prevPair;
+            prevPair = temp;
+        }
+        _myVector.push_back(prevPair);
+        return Iterator{_myVector, position.getCurPos()};
     }
 
 };

@@ -87,14 +87,19 @@ void RunMapTests::testFind() {
     assert(myMap.find(1) == myMap.end());
     myMap[1] = 1;
     myMap[3] = 3;
-    //assert(myMap.find(2) == myMap.end()); // not working right now. need to figure out how to properly handle the keys not in the map
+    assert(myMap.find(2) == myMap.end()); // not working right now. need to figure out how to properly handle the keys not in the map
     assert(myMap.find(1) != myMap.end());
 }
 
 void RunMapTests::testInsert() {
     MyMap<std::string, int> myMap;
-    return;
-    //myMap.insert(
+    myMap.insert(Pair::make_pair(std::string("Hello"), 1));
+    myMap.insert(Pair::make_pair(std::string("world!"), 2));
+    int val = 1;
+    for (const auto& elem : myMap) {
+        assert(elem.second == val);
+        ++val;
+    }
 }
 
 void RunMapTests::testErase() {

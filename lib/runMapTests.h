@@ -24,7 +24,9 @@ public:
     void testEmptyAndSize();
     void testFind();
     void testInsert();
-    void testErase();
+    void testEraseWithIterator();
+    void testEraseWithKey();
+    void testEraseWithRange();
 private:    
     std::string _name;
 };

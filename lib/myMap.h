@@ -163,8 +163,8 @@ public:
     }
     
     void erase(Iterator first, Iterator last) {
-        auto vecFirstIterator = _myVector.begin()+first.getCurPos();
-        auto vecLastIterator = _myVector.begin()+last.getCurPos();
+        auto vecFirstIterator = _myVector.begin()+(first.getCurPos());
+        auto vecLastIterator = _myVector.begin()+(last.getCurPos());
         _myVector.erase(vecFirstIterator, vecLastIterator);
     }
     

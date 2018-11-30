@@ -21,7 +21,9 @@ void RunMapTests::run() {
     testEmptyAndSize();
     testFind();
     testInsert();
-    testErase();
+    testEraseWithIterator();
+    testEraseWithKey();
+    testEraseWithRange();
     return;
 }
 
@@ -39,7 +41,7 @@ void RunMapTests::testBasic() {
 
 
 void RunMapTests::checkElements() {
-    MyMap<std::string, int> myMap{{"abc", 1}, {"ghi", 3}, {"def", 2}}; // mixed up
+    MyMap<std::string, int> myMap{{"abc", 1}, {"ghi", 3}, {"def", 2}}; // not in sorted order
     assert(myMap.find("abc")->second == 1);
     assert(myMap.find("ghi")->second == 3);
     assert(myMap.find("def")->second == 2);
@@ -87,7 +89,7 @@ void RunMapTests::testFind() {
     assert(myMap.find(1) == myMap.end());
     myMap[1] = 1;
     myMap[3] = 3;
-    assert(myMap.find(2) == myMap.end()); // not working right now. need to figure out how to properly handle the keys not in the map
+    assert(myMap.find(2) == myMap.end());
     assert(myMap.find(1) != myMap.end());
 }
 
@@ -102,6 +104,35 @@ void RunMapTests::testInsert() {
     }
 }
 
-void RunMapTests::testErase() {
-    return;
+void RunMapTests::testEraseWithIterator() {
+    MyMap<int, std::string> myMap{{3, "789"}, {1, "123"}, {2, "456"}};
+    myMap.erase(myMap.begin()+1); // erase 2
+    assert(myMap.size() == 2);
+    assert(myMap.find(1) != myMap.end());
+    assert(myMap.find(1)->second == "123");
+    assert(myMap.find(2) == myMap.end());
+    assert(myMap.find(3) != myMap.end());
+    assert(myMap.find(3)->second == "789");
+}
+
+void RunMapTests::testEraseWithKey() {
+    MyMap<int, std::string> myMap{{3, "789"}, {1, "123"}, {2, "456"}};
+    myMap.erase(1);
+    assert(myMap.size() == 2);
+    int val = 2;
+    for (auto it = myMap.begin(); it != myMap.end(); it++) {
+        assert(it->first == val);
+        ++val;
+    }
+}
+
+void RunMapTests::testEraseWithRange() {
+    MyMap<int, std::string> myMap{{3, "789"}, {1, "123"}, {2, "456"}, {5, "0"}, {4, "10"}};
+    myMap.erase(myMap.begin()+2, myMap.end()-1); // removing pairs with key 3 and 4. Range doens't include the right end
+    assert(myMap.size() == 3);
+    assert(myMap.find(1) != myMap.end());
+    assert(myMap.find(2) != myMap.end());
+    assert(myMap.find(3) == myMap.end());
+    assert(myMap.find(4) == myMap.end());
+    assert(myMap.find(5) != myMap.end());
 }

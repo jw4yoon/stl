@@ -188,8 +188,6 @@ public:
             _index = -1;
             _cap = 0;
         } else if (_index > -1) {
-            //delete _array[_index];
-            //--_cap;
             --_index;
         }
     }
@@ -198,7 +196,6 @@ public:
             for (auto& it = position; it != end()-1; ++it) {
                 *it = *(it+1); // overwrite the value of current position with the value of next
             }
-            //--_cap;
             --_index;
         }
 
@@ -206,12 +203,15 @@ public:
     // out of range results in undefined behaviour
     void erase(Iterator first, Iterator last) {
         int count = 0;
-        for (auto& it = first; it != last+1; ++it) {
-            ++count;
-            *it = *(last+count);
+        int eraseCount = last.getCurPos() - first.getCurPos();
+        if (eraseCount < 1) { // don't do anything when range is invalid. Or should I swap first and last?
+            return;
         }
-        //_cap -= count;
-        _index -= count;
+        for (auto& it = first; it != end(); ++it) { // shift elements to fill in empty spots
+            *it = *(last+count);
+            ++count;
+        }
+        _index -= eraseCount;
     }
     Iterator insert(Iterator position, const T& value) { // returns an iterator that points to the newly inserted value
         if (position == end()) { // when the new value needs to be attached at the end

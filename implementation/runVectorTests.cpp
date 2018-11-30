@@ -162,10 +162,11 @@ void RunVectorTests::testErase() {
         ++count;
     }
     assert(count == 4);
-    vecToErase.erase(vecToErase.begin()+1, vecToErase.end()-2);
-    assert(vecToErase.size() == 2);
+    vecToErase.erase(vecToErase.begin()+1, vecToErase.end()-2); // this should only erase 3
+    assert(vecToErase.size() == 3);
     assert(vecToErase[0] == 2);
-    assert(vecToErase[1] == 5);
+    assert(vecToErase[1] == 4);
+    assert(vecToErase[2] == 5);
 }
 
 void RunVectorTests::run() {

@@ -23,24 +23,24 @@ class MyMap {
 public:
     
     MyMap(){
-        std::cout << "Basic constructor called" << std::endl;
+        //std::cout << "Basic constructor called" << std::endl;
     }
 
     MyMap(const MyMap& other) : _myVector(other._myVector) {
-        std::cout << "Copy constructor called" << std::endl;
+        //std::cout << "Copy constructor called" << std::endl;
     }
     MyMap& operator=(const MyMap& other) {
-        std::cout << "Copy assignment operator called" << std::endl;
+        //std::cout << "Copy assignment operator called" << std::endl;
         if (this != &other) {
             _myVector = other._myVector;
         }
         return *this;
     }
     MyMap(const MyMap&& other) : _myVector(std::move(other._myVector)) {
-        std::cout << "Move constructor called" << std::endl;
+        //std::cout << "Move constructor called" << std::endl;
     }
     MyMap& operator=(const MyMap&& other) {
-        std::cout << "Move assignment operator called" << std::endl;
+        //std::cout << "Move assignment operator called" << std::endl;
         if (this != &other) {
             _myVector = std::move(other._myVector);
         }
@@ -106,9 +106,9 @@ public:
     }
 
     explicit MyMap(std::initializer_list<MyPair<Key, Value>> il) {
-        std::cout << "Constructor with initializer_list" << std::endl;
+        //std::cout << "Constructor with initializer_list" << std::endl;
         for (auto elem : il) { // need to sort this in order to perform O(logn) search
-            std::cout << elem.first <<  " <- elem.first " << elem.second << " <- elem.second" << std::endl;
+            //std::cout << elem.first <<  " <- elem.first " << elem.second << " <- elem.second" << std::endl;
             if (_myVector.size() == 0) {
                 _myVector.push_back(elem);
                 continue;
@@ -173,6 +173,19 @@ public:
         insertAtPosition(placeFound, pair);
     }
     
+    Value& at(Key key) { // throws out of range if key is not in the map already
+        auto isFound = find(key);
+        if (isFound == end()) {
+            throw std::out_of_range("Key doesn't exist");
+        } else {
+            return isFound->second;
+        }
+    }
+    
+    void clear() {
+        _myVector.clear();
+    }
+    
 private:
     Iterator placeToInsert(Key key) {
         // perform binary search
@@ -194,9 +207,7 @@ private:
                 low = middle + 1;
             }
         }
-        //middle = low;
         if (middle == 0 && low == 0) {
-        //if (middle == 0) {
             return begin();
         } else {
             return end();

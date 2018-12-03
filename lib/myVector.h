@@ -32,10 +32,10 @@ public:
         }
     }
     MyVector() { // basic constructor
-        std::cout << "Basic constructor called" << std::endl;
+        //std::cout << "Basic constructor called" << std::endl;
     }
     explicit MyVector(int numSize, int value) {
-        std::cout << "Constructor with numSize and value" << std::endl;
+        //std::cout << "Constructor with numSize and value" << std::endl;
         reSize(_array, _cap, numSize);
         for (int i = 0; i < numSize; ++i) {
             _array[i] = value;
@@ -43,7 +43,7 @@ public:
         _index = numSize - 1;
     }
     explicit MyVector(std::initializer_list<T> il) { // constructor with initializer_list
-        std::cout << "Constructor with initializer_list called" << std::endl;
+        //std::cout << "Constructor with initializer_list called" << std::endl;
         size_t listSize = il.size();
         reSize(_array, _cap, (int)listSize); // why does reSize(_array, _cap, _cap*2) work?
         for (size_t i = 0; i < listSize; ++i) {
@@ -52,7 +52,7 @@ public:
         _index = (int)listSize - 1;
     }
     MyVector(const MyVector& vec) { // copy constructor
-        std::cout << "Copy constructor called" << std::endl;
+        //std::cout << "Copy constructor called" << std::endl;
         _cap = vec._cap;
         _index = vec._index;
         reSize(_array, this->_cap, this->_cap);
@@ -61,7 +61,7 @@ public:
         }
     }
     MyVector& operator=(const MyVector& other) { // copy assignment operator
-        std::cout << "Copy assignment operator called" << std::endl;
+        //std::cout << "Copy assignment operator called" << std::endl;
         if (this != &other) { // avoid self-assignment
             reSize(_array, _cap, other._cap);
             for (int i = 0; i < other._cap; ++i) {
@@ -72,7 +72,7 @@ public:
         return *this;
     }
     MyVector(MyVector&& other) { // move constructor
-        std::cout << "Move constructor called" << std::endl;
+        //std::cout << "Move constructor called" << std::endl;
         _array = other._array;
         _cap = other._cap;
         _index = other._index;
@@ -81,7 +81,7 @@ public:
         other._index = -1;
     }
     MyVector& operator=(MyVector&& other) { // move assignment operator
-        std::cout << "Move assignment operator called" << std::endl;
+        //std::cout << "Move assignment operator called" << std::endl;
         if (this != &other) { // avoid self-assignment
             delete[] _array;
             _array = other._array;

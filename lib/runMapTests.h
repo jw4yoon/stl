@@ -27,6 +27,11 @@ public:
     void testEraseWithIterator();
     void testEraseWithKey();
     void testEraseWithRange();
+    void testAt();
+    void testAtOutOfRange();
+    void testClear();
+    // add tests for copy, move map
+    // add {testname} passed after passing each test?
 private:    
     std::string _name;
 };

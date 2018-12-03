@@ -12,6 +12,8 @@
 #include "runMapTests.h"
 #include "myMap.h"
 
+//#include "gtest/gtest.h"
+
 RunMapTests::RunMapTests() : _name{"MyMap"} {}
 
 void RunMapTests::run() {
@@ -24,6 +26,9 @@ void RunMapTests::run() {
     testEraseWithIterator();
     testEraseWithKey();
     testEraseWithRange();
+    testAt();
+    testAtOutOfRange();
+    testClear();
     return;
 }
 
@@ -135,4 +140,25 @@ void RunMapTests::testEraseWithRange() {
     assert(myMap.find(3) == myMap.end());
     assert(myMap.find(4) == myMap.end());
     assert(myMap.find(5) != myMap.end());
+}
+
+void RunMapTests::testAt() {
+    MyMap<int, std::string> myMap{{3, "789"}, {1, "123"}, {2, "456"}, {5, "0"}, {4, "10"}};
+    assert(myMap.at(1) == "123");
+    assert(myMap.at(3) == "789");
+}
+void RunMapTests::testAtOutOfRange() {
+    MyMap<int, int> myMap;
+    try {
+        myMap.at(1);
+    } catch (std::out_of_range){
+        std::cout << "Exception caught, key doesn't exist" << std::endl;
+    }
+    
+}
+void RunMapTests::testClear() {
+    MyMap<int, std::string> myMap{{3, "789"}, {1, "123"}, {2, "456"}, {5, "0"}, {4, "10"}};
+    assert(myMap.size() == 5);
+    myMap.clear();
+    assert(myMap.size() == 0);
 }

@@ -18,6 +18,10 @@ public:
     std::string getName() override;
     RunMapTests();
     void testBasic();
+    void testCopyConstructor();
+    void testCopyAssignmentOperator();
+    void testMoveConstructor();
+    void testMoveAssignmentOperator();
     void checkElements();
     void checkMoreElements();
     void overwriteValue();

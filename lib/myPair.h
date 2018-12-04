@@ -47,6 +47,13 @@ public:
         }
         return *this;
     }
+    bool operator==(const MyPair& other) {
+        if (this->first == other.first && this->second == other.second) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 };
 
 namespace Pair{

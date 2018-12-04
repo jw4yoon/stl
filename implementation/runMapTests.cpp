@@ -18,6 +18,10 @@ RunMapTests::RunMapTests() : _name{"MyMap"} {}
 
 void RunMapTests::run() {
     testBasic();
+    testCopyConstructor();
+    testCopyAssignmentOperator();
+    testMoveConstructor();
+    testMoveAssignmentOperator();
     checkElements();
     checkMoreElements();
     testEmptyAndSize();
@@ -42,6 +46,60 @@ void RunMapTests::testBasic() {
     assert(myMapTwo.find(1)->second == "123");
     assert(myMapTwo.find(2)->second == "456");
     assert(myMapTwo.find(3)->second == "789");
+}
+
+void RunMapTests::testCopyConstructor() {
+    MyMap<int, int> myMap{{1, 1}, {2, 2}};
+    MyMap<int, int> myMapCopy = myMap;
+    assert(myMap.size() == myMapCopy.size());
+    auto myMapIt = myMap.begin();
+    auto myMapCopyIt = myMapCopy.begin();
+    while(myMapIt != myMap.end()) {
+        assert(*myMapIt == *myMapCopyIt);
+        ++myMapIt;
+        ++myMapCopyIt;
+    }
+}
+
+void RunMapTests::testCopyAssignmentOperator() {
+    MyMap<int, int> myMap{{1, 1}, {2, 2}};
+    MyMap<int, int> myMapCopy;
+    myMapCopy = myMap;
+    assert(myMap.size() == myMapCopy.size());
+    auto myMapIt = myMap.begin();
+    auto myMapCopyIt = myMapCopy.begin();
+    while(myMapIt != myMap.end()) {
+        assert(*myMapIt == *myMapCopyIt);
+        ++myMapIt;
+        ++myMapCopyIt;
+    }
+}
+
+void RunMapTests::testMoveConstructor() {
+    MyMap<int, int> myMap{{1, 1}, {2, 2}};
+    auto oldMyMapSize = myMap.size();
+    MyMap<int, int> myMapCopy = std::move(myMap);
+    assert(myMap.size() == 0);
+    assert(myMapCopy.size() == oldMyMapSize);
+    int val = 1;
+    for (const auto& elem : myMapCopy) {
+        assert(elem.second == val);
+        ++val;
+    }
+}
+
+void RunMapTests::testMoveAssignmentOperator() {
+    MyMap<int, int> myMap{{1, 1}, {2, 2}};
+    auto oldMyMapSize = myMap.size();
+    MyMap<int, int> myMapCopy;
+    myMapCopy = std::move(myMap);
+    assert(myMap.empty());
+    assert(myMapCopy.size() == oldMyMapSize);
+    int val = 1;
+    for (const auto& elem : myMapCopy) {
+        assert(elem.second == val);
+        ++val;
+    }
 }
 
 

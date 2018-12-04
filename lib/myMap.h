@@ -36,10 +36,10 @@ public:
         }
         return *this;
     }
-    MyMap(const MyMap&& other) : _myVector(std::move(other._myVector)) {
+    MyMap(MyMap&& other) : _myVector(std::move(other._myVector)) {
         //std::cout << "Move constructor called" << std::endl;
     }
-    MyMap& operator=(const MyMap&& other) {
+    MyMap& operator=(MyMap&& other) {
         //std::cout << "Move assignment operator called" << std::endl;
         if (this != &other) {
             _myVector = std::move(other._myVector);
